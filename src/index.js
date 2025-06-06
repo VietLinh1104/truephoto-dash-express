@@ -13,6 +13,15 @@ dotenv.config();
 const app = express();
 app.use(express.json());
 
+// Middleware to log time, API endpoint, and response status code for each request
+app.use((req, res, next) => {
+  const currentTime = new Date().toISOString();
+  res.on('finish', () => {
+    console.log(`[${currentTime}] ${req.method} ${req.originalUrl} ${res.statusCode}`);
+  });
+  next();
+});
+
 // Routes
 app.use('/api/auth', authRoutes);
 app.use('/api/email-submissions', clientEmailSubmissionRoutes);
