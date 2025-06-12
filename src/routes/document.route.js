@@ -5,27 +5,26 @@ import { auth, checkPermission } from '../middleware/auth.middleware.js';
 const router = express.Router();
 
 router.post('/', 
-    auth, checkPermission('document', 'create'),
     create
 );
 
 router.get('/', 
-    auth, checkPermission('document', 'read_all'),
+    auth, checkPermission('documents', 'read_all'),
     readAll
 );
 
 router.get('/:id_document', 
-    auth, checkPermission('document', 'read'),
+    auth, checkPermission('documents', 'read'),
     readById
 );
 
 router.put('/:id_document', 
-    auth, checkPermission('document', 'update'),
+    auth, checkPermission('documents', 'update'),
     update
 );
 
 router.delete('/:id_document', 
-    auth, checkPermission('document', 'delete'),
+    auth, checkPermission('documents', 'delete'),
     deleteById
 );
 

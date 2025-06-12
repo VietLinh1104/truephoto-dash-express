@@ -11,7 +11,7 @@ import { auth, checkPermission } from '../middleware/auth.middleware.js';
 const router = express.Router();
 
 // Create a new request client
-router.post('/', auth, checkPermission('request_client', 'create'), createRequestClient);
+router.post('/',  createRequestClient);
 
 // Get all request clients
 router.get('/', auth, checkPermission('request_client', 'read_all'), getAllRequestClients);

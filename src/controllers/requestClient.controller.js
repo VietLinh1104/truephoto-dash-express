@@ -1,4 +1,5 @@
 import { Document, RequestClient, User } from "../models/index.model.js";
+import { sendText } from '../services/larkNotify.service.js'; 
 
 export const createRequestClient = async (req, res) => {
   try {
@@ -13,6 +14,11 @@ export const createRequestClient = async (req, res) => {
       request_status,
       id_user,
     });
+
+    // Gửi thông báo tới Lark
+    const chatId = process.env.LARK_DEFAULT_CHAT_ID;
+    const text = `🆕 New request từ ${fullname}\nEmail: ${email}\nChi tiết: ${processing_request_details}`;
+    sendText(chatId, text).catch(console.error);
 
     res.status(201).json({ data: requestClient });
   } catch (error) {

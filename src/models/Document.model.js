@@ -1,5 +1,7 @@
 import { DataTypes } from 'sequelize';
 import sequelize from '../config/database.config.js';
+import * as larkService from '../services/larkNotify.service.js';
+import RequestClient from './RequestClient.model.js'; // 🔥 Thêm dòng này
 
 const Document = sequelize.define('Document', {
   id_document: {
@@ -51,6 +53,30 @@ const Document = sequelize.define('Document', {
     checkParent() {
       // Ràng buộc đã được loại bỏ để cho phép cả hai cột null
     }
+  }
+});
+
+// ✅ Gửi thông báo sau khi Document được upload thành công
+Document.afterCreate(async (document) => {
+  if (!document.id_request_client) return;
+
+  try {
+    const requestClient = await RequestClient.findByPk(document.id_request_client);
+    if (!requestClient) return;
+
+    const chatId = "oc_a677e7241c5f7348c6888f8b70afb351";
+
+    const text = `🆕 New document uploaded for request:\n` +
+      `• 🔗 Link: http://localhost:3000/service/client-requests/${requestClient.id_request_client}\n` +
+      `• 👤 Name: ${requestClient.fullname}\n` +
+      `• 📧 Email: ${requestClient.email}\n` +
+      `• 📱 Phone: ${requestClient.phone_number}\n` +
+      `• 📌 Status: ${requestClient.request_status}`;
+
+    await larkService.sendText(chatId, text);
+    console.log('✔️ Lark notification sent after document upload');
+  } catch (err) {
+    console.error('❌ Failed to send Lark notification:', err);
   }
 });
 

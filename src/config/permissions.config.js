@@ -6,7 +6,7 @@ const permissions = {
         email: ['read', 'read_all', 'create', 'update', 'delete'],
         request_client: ['read', 'read_all', 'create', 'update', 'delete'],
         deliverables_document: ['create', 'read_all', 'read', 'update', 'delete'],
-        document: ['read_all', 'read', 'create', 'update', 'delete'],
+        documents: ['read_all', 'read', 'create', 'update', 'delete'],
         send_mail: ['send'],
     },
     employee: {
@@ -18,7 +18,7 @@ const permissions = {
         email: ['read', 'read_all', 'create', 'update', 'delete'],
         request_client: ['read', 'read_all', 'create', 'update', 'delete'],
         deliverables_document: ['create', 'read_all', 'read', 'update', 'delete'],
-        document: ['read_all', 'read', 'create', 'update', 'delete'],
+        documents: ['read_all', 'read', 'create', 'update', 'delete'],
         send_mail: ['send'],
     }
 };

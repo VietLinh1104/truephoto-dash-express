@@ -2,6 +2,8 @@ import express from 'express';
 import dotenv from 'dotenv';
 import cors from 'cors';
 import sequelize from './config/database.config.js';
+import { larkEventMiddleware } from './middleware/larkEvent.middleware.js';
+
 
 // Import routes
 import authRoutes from './routes/auth.route.js';
@@ -10,6 +12,10 @@ import emailRoutes from './routes/email.route.js';
 import documentRoutes from './routes/document.route.js';
 import requestClientRoutes from './routes/requestClient.route.js';
 import deliverablesDocumentRoutes from './routes/deliverablesDocument.route.js';
+import larkRoute from './routes/lark.route.js';
+
+
+
 
 // Load env variables
 dotenv.config();
@@ -19,7 +25,7 @@ app.use(express.json());
 
 // CORS cấu hình đầy đủ
 const corsOptions = {
-  origin: 'http://localhost:3000', // Cho phép frontend truy cập
+  origin: ['http://localhost:3000','http://localhost:3001'], // Cho phép frontend truy cập
   credentials: true,               // Cho phép gửi cookie / Authorization header
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization'],
@@ -44,6 +50,8 @@ app.use('/api/email', emailRoutes);
 app.use('/api/documents', documentRoutes);
 app.use('/api/request-clients', requestClientRoutes);
 app.use('/api/deliverables-documents', deliverablesDocumentRoutes);
+app.use('/api/lark', larkRoute);
+app.use('/webhook/lark', larkEventMiddleware);
 
 // Kết nối DB và chạy server
 (async () => {
