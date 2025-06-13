@@ -2,6 +2,8 @@ import { DataTypes } from 'sequelize';
 import sequelize from '../config/database.config.js';
 import * as larkService from '../services/larkNotify.service.js';
 import RequestClient from './RequestClient.model.js'; // 🔥 Thêm dòng này
+import dotenv from 'dotenv';
+dotenv.config();
 
 const Document = sequelize.define('Document', {
   id_document: {
@@ -64,10 +66,10 @@ Document.afterCreate(async (document) => {
     const requestClient = await RequestClient.findByPk(document.id_request_client);
     if (!requestClient) return;
 
-    const chatId = "oc_a677e7241c5f7348c6888f8b70afb351";
+    const chatId = process.env.NEXT_PUBLIC_EXPRESS_URL;
 
     const text = `🆕 New document uploaded for request:\n` +
-      `• 🔗 Link: http://localhost:3000/service/client-requests/${requestClient.id_request_client}\n` +
+      `• 🔗 Link: ${MANAGER_URL}/service/client-requests/${requestClient.id_request_client}\n` +
       `• 👤 Name: ${requestClient.fullname}\n` +
       `• 📧 Email: ${requestClient.email}\n` +
       `• 📱 Phone: ${requestClient.phone_number}\n` +
