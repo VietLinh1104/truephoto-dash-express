@@ -25,13 +25,13 @@ app.use(express.json());
 
 // CORS cấu hình đầy đủ
 const corsOptions = {
-  origin: ['http://localhost:3000','http://localhost:3001'], // Cho phép frontend truy cập
+  origin: [process.env.FRONTEND_URL,process.env.MANAGER_URL], // Cho phép frontend truy cập
   credentials: true,               // Cho phép gửi cookie / Authorization header
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization'],
 };
 
-app.use(cors(corsOptions));            // Áp dụng CORS cho mọi request
+app.use(cors(corsOptions));            // Áp dụng COPORTRS cho mọi request
 app.options('*', cors(corsOptions));   // Xử lý preflight request
 
 // Middleware log thời gian, endpoint, và status
