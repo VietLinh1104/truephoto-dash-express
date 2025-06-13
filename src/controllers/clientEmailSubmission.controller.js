@@ -3,16 +3,17 @@ import { ClientEmailSubmission, User } from '../models/index.model.js';
 // Create new email submission
 export const createEmailSubmission = async (req, res) => {
   try {
-    const { client_email, order_status, id_user } = req.body.data || req.body; // Hỗ trợ cả { data: ... } và payload trực tiếp
+    const data = req.body?.data ?? req.body; // <-- Đây là dòng sửa
 
     const emailSubmission = await ClientEmailSubmission.create({
-      client_email,
-      order_status: order_status || 'Pending',
-      id_user,
+      client_email: data.client_email,
+      order_status: data.order_status || 'Pending',
+      id_user: data.id_user,
     });
 
     res.status(201).json({ data: emailSubmission });
   } catch (error) {
+    console.error(error);
     res.status(400).json({ error: { message: error.message } });
   }
 };
