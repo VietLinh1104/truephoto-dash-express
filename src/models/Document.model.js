@@ -66,7 +66,7 @@ Document.afterCreate(async (document) => {
     const requestClient = await RequestClient.findByPk(document.id_request_client);
     if (!requestClient) return;
 
-    const chatId = process.env.NEXT_PUBLIC_EXPRESS_URL;
+    const chatId = process.env.LARK_APP_ID_CHAT;
 
     const text = `🆕 New document uploaded for request:\n` +
       `• 🔗 Link: ${MANAGER_URL}/service/client-requests/${requestClient.id_request_client}\n` +
