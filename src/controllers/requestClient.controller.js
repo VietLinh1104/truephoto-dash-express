@@ -3,28 +3,31 @@ import { sendText } from '../services/larkNotify.service.js';
 
 export const createRequestClient = async (req, res) => {
   try {
-    const { fullname, email, phone_number, address, processing_request_details, request_status, id_user } = req.body.data || req.body;
+    const { data } = req.body;
 
     const requestClient = await RequestClient.create({
-      fullname,
-      email,
-      phone_number,
-      address,
-      processing_request_details,
-      request_status,
-      id_user,
+      fullname: data.fullname,
+      email: data.email,
+      phone_number: data.phone_number,
+      address: data.address,
+      processing_request_details: data.processing_request_details,
+      request_status: data.request_status,
+      id_user: data.id_user,
     });
 
     // Gửi thông báo tới Lark
     const chatId = process.env.LARK_DEFAULT_CHAT_ID;
+    const { fullname, email, processing_request_details } = data; // ✅ Fix: destructure từ `data`
     const text = `🆕 New request từ ${fullname}\nEmail: ${email}\nChi tiết: ${processing_request_details}`;
     sendText(chatId, text).catch(console.error);
 
     res.status(201).json({ data: requestClient });
   } catch (error) {
+    console.error("❌ Backend error:", error);
     res.status(400).json({ error: { message: error.message } });
   }
 };
+
 
 export const getAllRequestClients = async (req, res) => {
   try {
