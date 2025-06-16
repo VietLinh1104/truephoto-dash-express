@@ -14,7 +14,7 @@ const router = express.Router();
 router.post('/',  createRequestClient);
 
 // Get all request clients
-router.get('/', auth, checkPermission('request_client', 'read_all'), getAllRequestClients);
+router.get('/', auth, getAllRequestClients);
 
 // Get a request client by ID
 router.get('/:id_request_client', auth, checkPermission('request_client', 'read'), getRequestClientById);

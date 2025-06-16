@@ -38,7 +38,7 @@ export async function sendCard(chatId, title, requestClient) {
           {
             tag: 'button',
             text: { tag: 'plain_text', content: '🔗 View Request' },
-            url: `${process.env.FRONTEND_URL}/service/client-requests/${requestClient.id_request_client}`,
+            url: `${process.env.MANAGER_URL}/service/client-requests/${requestClient.id_request_client}`,
             type: 'primary'
           }
         ]
