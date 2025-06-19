@@ -20,6 +20,7 @@ const permissions = {
     public: {
         client_email_submission: ['create'],
         request_client: ['create', 'read'],
+        deliverables_document: ['read', 'update', 'delete'],
         documents: ['create'],
     }
 };
